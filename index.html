@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>熊猫中文乐园</title>
-<meta name="description" content="跟着熊猫伙伴玩认字卡、发音练习、配对游戏和小测验，边玩边记住中文单词。">
+<title>龙宝学中文</title>
+<meta name="description" content="跟着龙宝伙伴玩认字卡、发音练习、配对游戏和小测验，边玩边记住中文单词。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@600;700;800&family=ZCOOL+KuaiLe&display=swap">
 <style>
@@ -23,8 +23,8 @@
     --purple:#8B5FBF; --purple-dark:#6C43A0;
     --blue:#3E8FC1; --blue-dark:#25729F;
 
-    --panda-ink:#232323;
-    --panda-white:#FFFFFF;
+    --mascot-ink:#232323;
+    --mascot-white:#FFFFFF;
     --text-on-gold:#3B2A0E;
 
     --radius-s:0.6em;
@@ -85,21 +85,24 @@
   .stat-star{ color:var(--gold-dark); white-space:nowrap; }
   .stat-level{ color:var(--ink-soft); font-size:0.72rem; border-left:1px solid var(--border); padding-left:10px; white-space:nowrap; }
 
-  /* panda mascot, drawn in CSS */
-  .panda-mascot{ position:relative; width:56px; height:56px; flex-shrink:0; filter:drop-shadow(0 3px 6px var(--shadow)); }
-  .panda-mascot .ear{ position:absolute; width:30%; height:30%; background:var(--panda-ink); border-radius:50%; top:-8%; }
-  .panda-mascot .ear.left{ left:-6%; } .panda-mascot .ear.right{ right:-6%; }
-  .panda-mascot .face{ position:absolute; inset:0; background:var(--panda-white); border-radius:50%; }
-  .panda-mascot .patch{ position:absolute; width:32%; height:38%; background:var(--panda-ink); border-radius:50%; top:20%; }
-  .panda-mascot .patch.left{ left:2%; transform:rotate(-12deg); } .panda-mascot .patch.right{ right:2%; transform:rotate(12deg); }
-  .panda-mascot .eye{ position:absolute; width:10%; height:10%; background:var(--panda-white); border-radius:50%; top:34%; }
-  .panda-mascot .eye.left{ left:20%; } .panda-mascot .eye.right{ right:20%; }
-  .panda-mascot .nose{ position:absolute; width:12%; height:9%; background:var(--panda-ink); border-radius:50%; top:50%; left:50%; transform:translate(-50%,-50%); }
-  .panda-mascot .blush{ position:absolute; width:12%; height:7%; background:var(--red); opacity:0.4; border-radius:50%; top:46%; }
-  .panda-mascot .blush.left{ left:6%; } .panda-mascot .blush.right{ right:6%; }
-  .hero-panda{ width:100px; height:100px; animation:floaty 3.4s ease-in-out infinite; }
+  /* little dragon mascot, drawn in CSS */
+  .dragon-mascot{ position:relative; width:56px; height:56px; flex-shrink:0; filter:drop-shadow(0 3px 6px var(--shadow)); }
+  .dragon-mascot .horn{ position:absolute; width:16%; height:34%; top:-18%; background:var(--mascot-white); clip-path:polygon(50% 0%, 8% 100%, 92% 100%); }
+  .dragon-mascot .horn.left{ left:20%; transform:rotate(-14deg); } .dragon-mascot .horn.right{ right:20%; transform:rotate(14deg); }
+  .dragon-mascot .face{ position:absolute; left:3%; right:3%; top:10%; bottom:0; background:linear-gradient(160deg, var(--gold), var(--gold-dark)); border-radius:48% 48% 50% 50% / 60% 60% 42% 42%; }
+  .dragon-mascot .eye{ position:absolute; width:22%; height:22%; top:36%; background:var(--mascot-white); border-radius:50%; display:flex; align-items:center; justify-content:center; }
+  .dragon-mascot .eye.left{ left:15%; } .dragon-mascot .eye.right{ right:15%; }
+  .dragon-mascot .pupil{ width:48%; height:48%; background:var(--mascot-ink); border-radius:50%; }
+  .dragon-mascot .snout{ position:absolute; width:32%; height:16%; left:50%; bottom:12%; transform:translateX(-50%); background:var(--mascot-white); border-radius:0 0 60% 60% / 0 0 90% 90%; }
+  .dragon-mascot .nostril{ position:absolute; width:6%; height:6%; bottom:20%; background:var(--mascot-ink); border-radius:50%; opacity:0.55; }
+  .dragon-mascot .nostril.left{ left:41%; } .dragon-mascot .nostril.right{ right:41%; }
+  .dragon-mascot .whisker{ position:absolute; width:15%; height:22%; top:52%; background:var(--red); border-radius:0 60% 60% 60%; }
+  .dragon-mascot .whisker.left{ left:-5%; transform:rotate(160deg); } .dragon-mascot .whisker.right{ right:-5%; transform:rotate(-70deg); }
+  .dragon-mascot .blush{ position:absolute; width:13%; height:7%; background:var(--red); opacity:0.35; border-radius:50%; top:50%; }
+  .dragon-mascot .blush.left{ left:9%; } .dragon-mascot .blush.right{ right:9%; }
+  .hero-dragon{ width:100px; height:100px; animation:floaty 3.4s ease-in-out infinite; }
   @keyframes floaty{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-8px); } }
-  @media (prefers-reduced-motion:reduce){ .hero-panda{ animation:none; } }
+  @media (prefers-reduced-motion:reduce){ .hero-dragon{ animation:none; } }
 
   .screen[hidden]{ display:none; }
 
@@ -208,17 +211,19 @@
   <header class="top-bar">
     <button id="backBtn" class="icon-btn" hidden aria-label="返回">←</button>
     <div class="brand">
-      <div class="panda-mascot" aria-hidden="true">
-        <span class="ear left"></span><span class="ear right"></span>
+      <div class="dragon-mascot" aria-hidden="true">
+        <span class="horn left"></span><span class="horn right"></span>
         <span class="face"></span>
-        <span class="patch left"></span><span class="patch right"></span>
-        <span class="eye left"></span><span class="eye right"></span>
-        <span class="nose"></span>
+        <span class="eye left"><span class="pupil"></span></span>
+        <span class="eye right"><span class="pupil"></span></span>
+        <span class="snout"></span>
+        <span class="nostril left"></span><span class="nostril right"></span>
+        <span class="whisker left"></span><span class="whisker right"></span>
         <span class="blush left"></span><span class="blush right"></span>
       </div>
       <div class="brand-text">
-        <h1>熊猫中文乐园</h1>
-        <p>跟熊猫一起学中文</p>
+        <h1>龙宝学中文</h1>
+        <p>跟龙宝一起学中文</p>
       </div>
     </div>
     <div class="top-bar-right">
@@ -228,7 +233,7 @@
       </div>
       <div class="stats-pill">
         <span class="stat-star">⭐ <span id="starCount">0</span></span>
-        <span class="stat-level" id="levelLabel">熊猫宝宝</span>
+        <span class="stat-level" id="levelLabel">小龙蛋</span>
       </div>
     </div>
   </header>
@@ -236,12 +241,14 @@
   <main>
     <section id="screen-home" class="screen">
       <div class="home-hero">
-        <div class="panda-mascot hero-panda" aria-hidden="true">
-          <span class="ear left"></span><span class="ear right"></span>
+        <div class="dragon-mascot hero-dragon" aria-hidden="true">
+          <span class="horn left"></span><span class="horn right"></span>
           <span class="face"></span>
-          <span class="patch left"></span><span class="patch right"></span>
-          <span class="eye left"></span><span class="eye right"></span>
-          <span class="nose"></span>
+          <span class="eye left"><span class="pupil"></span></span>
+          <span class="eye right"><span class="pupil"></span></span>
+          <span class="snout"></span>
+          <span class="nostril left"></span><span class="nostril right"></span>
+          <span class="whisker left"></span><span class="whisker right"></span>
           <span class="blush left"></span><span class="blush right"></span>
         </div>
         <div class="home-hero-text">
@@ -249,7 +256,7 @@
           <p>选一个游戏，开始今天的中文冒险吧！</p>
           <div class="session-control">
             <button class="btn btn-primary" id="startSessionBtn">开始 25 分钟练习 ⏱</button>
-            <p class="session-hint" id="sessionHint" hidden>正在专心练习中，时间到了熊猫会提醒你哦～ 🐼</p>
+            <p class="session-hint" id="sessionHint" hidden>正在专心练习中，时间到了龙宝会提醒你哦～ 🐉</p>
           </div>
         </div>
       </div>
@@ -396,7 +403,7 @@
 <div id="toast" class="toast" hidden></div>
 <div class="session-overlay" id="sessionModal" hidden>
   <div class="celebrate-panel">
-    <p class="celebrate-emoji">🐼💤</p>
+    <p class="celebrate-emoji">🐉💤</p>
     <p class="celebrate-msg">时间到啦！你已经专心练习了 25 分钟，真棒！去休息一下眼睛吧。</p>
     <div class="celebrate-actions">
       <button class="btn btn-primary" id="restartSessionBtn">再练 25 分钟</button>
@@ -468,11 +475,11 @@
   ];
 
   var LEVELS = [
-    {min:0, name:'熊猫宝宝'},
-    {min:15, name:'竹林探险家'},
-    {min:35, name:'中文小达人'},
-    {min:60, name:'汉字大师'},
-    {min:100, name:'熊猫国师'}
+    {min:0, name:'小龙蛋'},
+    {min:15, name:'云间小龙'},
+    {min:35, name:'汉字飞龙'},
+    {min:60, name:'中文金龙'},
+    {min:100, name:'中文神龙'}
   ];
 
   var STORAGE_KEY = 'pandaZhProgressV1';
@@ -902,7 +909,7 @@
       btn.className = 'match-tile';
       btn.dataset.idx = idx;
       btn.innerHTML =
-        '<span class="match-tile-back">🐾</span>' +
+        '<span class="match-tile-back">🐉</span>' +
         '<span class="match-tile-front" hidden><b lang="zh-Hans">' + tile.display + '</b><small>' + tile.sub + '</small></span>';
       btn.addEventListener('click', function(){ onTileClick(idx); });
       grid.appendChild(btn);
