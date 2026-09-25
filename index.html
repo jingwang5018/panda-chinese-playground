@@ -87,19 +87,19 @@
 
   /* little dragon mascot, drawn in CSS */
   .dragon-mascot{ position:relative; width:56px; height:56px; flex-shrink:0; filter:drop-shadow(0 3px 6px var(--shadow)); }
-  .dragon-mascot .horn{ position:absolute; width:16%; height:34%; top:-18%; background:var(--mascot-white); clip-path:polygon(50% 0%, 8% 100%, 92% 100%); }
-  .dragon-mascot .horn.left{ left:20%; transform:rotate(-14deg); } .dragon-mascot .horn.right{ right:20%; transform:rotate(14deg); }
-  .dragon-mascot .face{ position:absolute; left:3%; right:3%; top:10%; bottom:0; background:linear-gradient(160deg, var(--gold), var(--gold-dark)); border-radius:48% 48% 50% 50% / 60% 60% 42% 42%; }
-  .dragon-mascot .eye{ position:absolute; width:22%; height:22%; top:36%; background:var(--mascot-white); border-radius:50%; display:flex; align-items:center; justify-content:center; }
-  .dragon-mascot .eye.left{ left:15%; } .dragon-mascot .eye.right{ right:15%; }
-  .dragon-mascot .pupil{ width:48%; height:48%; background:var(--mascot-ink); border-radius:50%; }
-  .dragon-mascot .snout{ position:absolute; width:32%; height:16%; left:50%; bottom:12%; transform:translateX(-50%); background:var(--mascot-white); border-radius:0 0 60% 60% / 0 0 90% 90%; }
-  .dragon-mascot .nostril{ position:absolute; width:6%; height:6%; bottom:20%; background:var(--mascot-ink); border-radius:50%; opacity:0.55; }
-  .dragon-mascot .nostril.left{ left:41%; } .dragon-mascot .nostril.right{ right:41%; }
-  .dragon-mascot .whisker{ position:absolute; width:15%; height:22%; top:52%; background:var(--red); border-radius:0 60% 60% 60%; }
-  .dragon-mascot .whisker.left{ left:-5%; transform:rotate(160deg); } .dragon-mascot .whisker.right{ right:-5%; transform:rotate(-70deg); }
-  .dragon-mascot .blush{ position:absolute; width:13%; height:7%; background:var(--red); opacity:0.35; border-radius:50%; top:50%; }
-  .dragon-mascot .blush.left{ left:9%; } .dragon-mascot .blush.right{ right:9%; }
+  .dragon-mascot .fin{ position:absolute; width:16%; height:24%; top:32%; background:var(--blue-dark); border-radius:50% 50% 50% 0; }
+  .dragon-mascot .fin.left{ left:-7%; transform:rotate(-25deg); } .dragon-mascot .fin.right{ right:-7%; transform:rotate(25deg) scaleX(-1); }
+  .dragon-mascot .horn{ position:absolute; width:20%; height:20%; top:-2%; background:var(--mascot-white); border-radius:0% 50% 50% 50%; }
+  .dragon-mascot .horn.left{ left:16%; transform:rotate(-10deg); } .dragon-mascot .horn.right{ right:16%; transform:rotate(10deg) scaleX(-1); }
+  .dragon-mascot .face{ position:absolute; left:2%; right:2%; top:16%; bottom:0; background:linear-gradient(160deg, var(--blue), var(--blue-dark)); border-radius:50% 50% 46% 46% / 58% 58% 42% 42%; }
+  .dragon-mascot .eye{ position:absolute; width:24%; height:24%; top:36%; background:var(--mascot-white); border-radius:50%; display:flex; align-items:center; justify-content:center; }
+  .dragon-mascot .eye.left{ left:14%; } .dragon-mascot .eye.right{ right:14%; }
+  .dragon-mascot .pupil{ width:56%; height:56%; background:var(--mascot-ink); border-radius:50%; }
+  .dragon-mascot .nostril{ position:absolute; width:6%; height:6%; bottom:28%; background:var(--mascot-ink); border-radius:50%; opacity:0.5; }
+  .dragon-mascot .nostril.left{ left:42%; } .dragon-mascot .nostril.right{ right:42%; }
+  .dragon-mascot .mouth{ position:absolute; width:26%; height:10%; left:50%; bottom:14%; transform:translateX(-50%); background:var(--mascot-ink); opacity:0.55; border-radius:0 0 50% 50%; }
+  .dragon-mascot .blush{ position:absolute; width:14%; height:8%; background:var(--red); opacity:0.4; border-radius:50%; top:52%; }
+  .dragon-mascot .blush.left{ left:5%; } .dragon-mascot .blush.right{ right:5%; }
   .hero-dragon{ width:100px; height:100px; animation:floaty 3.4s ease-in-out infinite; }
   @keyframes floaty{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-8px); } }
   @media (prefers-reduced-motion:reduce){ .hero-dragon{ animation:none; } }
@@ -212,13 +212,13 @@
     <button id="backBtn" class="icon-btn" hidden aria-label="返回">←</button>
     <div class="brand">
       <div class="dragon-mascot" aria-hidden="true">
+        <span class="fin left"></span><span class="fin right"></span>
         <span class="horn left"></span><span class="horn right"></span>
         <span class="face"></span>
         <span class="eye left"><span class="pupil"></span></span>
         <span class="eye right"><span class="pupil"></span></span>
-        <span class="snout"></span>
         <span class="nostril left"></span><span class="nostril right"></span>
-        <span class="whisker left"></span><span class="whisker right"></span>
+        <span class="mouth"></span>
         <span class="blush left"></span><span class="blush right"></span>
       </div>
       <div class="brand-text">
@@ -242,13 +242,13 @@
     <section id="screen-home" class="screen">
       <div class="home-hero">
         <div class="dragon-mascot hero-dragon" aria-hidden="true">
+          <span class="fin left"></span><span class="fin right"></span>
           <span class="horn left"></span><span class="horn right"></span>
           <span class="face"></span>
           <span class="eye left"><span class="pupil"></span></span>
           <span class="eye right"><span class="pupil"></span></span>
-          <span class="snout"></span>
           <span class="nostril left"></span><span class="nostril right"></span>
-          <span class="whisker left"></span><span class="whisker right"></span>
+          <span class="mouth"></span>
           <span class="blush left"></span><span class="blush right"></span>
         </div>
         <div class="home-hero-text">
