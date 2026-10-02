@@ -483,17 +483,76 @@
   ];
 
   var STORAGE_KEY = 'pandaZhProgressV1';
+  var LEARNER_KEY = 'longbaoLearnerIdV1';
+  var API_URL = '/api/progress';
   var progress = loadProgress();
+  var learnerId = getLearnerId();
+  var syncTimer = null;
 
   function loadProgress(){
     try{
       var raw = localStorage.getItem(STORAGE_KEY);
-      if(!raw) return {stars:0, known:{}, pronounced:{}};
+      if(!raw) return {stars:0, known:{}, pronounced:{}, sessions:0};
       var parsed = JSON.parse(raw);
-      return {stars:parsed.stars||0, known:parsed.known||{}, pronounced:parsed.pronounced||{}};
-    }catch(e){ return {stars:0, known:{}, pronounced:{}}; }
+      return {stars:parsed.stars||0, known:parsed.known||{}, pronounced:parsed.pronounced||{}, sessions:parsed.sessions||0};
+    }catch(e){ return {stars:0, known:{}, pronounced:{}, sessions:0}; }
   }
-  function saveProgress(){ try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); }catch(e){} }
+  function makeLearnerId(){
+    if(window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c){
+      var r = Math.random()*16|0;
+      return (c === 'x' ? r : (r&0x3|0x8)).toString(16);
+    });
+  }
+  function getLearnerId(){
+    try{
+      var id = localStorage.getItem(LEARNER_KEY);
+      if(!id){ id = makeLearnerId(); localStorage.setItem(LEARNER_KEY, id); }
+      return id;
+    }catch(e){ return makeLearnerId(); }
+  }
+  function saveProgress(){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); }catch(e){}
+    clearTimeout(syncTimer);
+    syncTimer = setTimeout(pushProgress, 800);
+  }
+  function pushProgress(){
+    try{
+      fetch(API_URL, {
+        method:'PUT',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({id:learnerId, stars:progress.stars, sessions:progress.sessions||0, known:progress.known, pronounced:progress.pronounced}),
+        keepalive:true
+      }).catch(function(){});
+    }catch(e){}
+  }
+  function unionMap(a, b){
+    var out = {};
+    [a, b].forEach(function(m){
+      Object.keys(m||{}).forEach(function(k){
+        if(!out[k]) out[k] = [];
+        (m[k]||[]).forEach(function(w){ if(out[k].indexOf(w) === -1) out[k].push(w); });
+      });
+    });
+    return out;
+  }
+  function pullProgress(){
+    try{
+      fetch(API_URL + '?id=' + encodeURIComponent(learnerId), {cache:'no-store'}).then(function(res){
+        if(res.status === 404){ pushProgress(); return null; }
+        if(!res.ok) return null;
+        return res.json();
+      }).then(function(remote){
+        if(!remote) return;
+        progress.stars = Math.max(progress.stars||0, remote.stars||0);
+        progress.sessions = Math.max(progress.sessions||0, remote.sessions||0);
+        progress.known = unionMap(progress.known, remote.known);
+        progress.pronounced = unionMap(progress.pronounced, remote.pronounced);
+        saveProgress();
+        renderHeaderStats();
+      }).catch(function(){});
+    }catch(e){}
+  }
   function knownCountFor(catId){ return (progress.known[catId]||[]).length; }
   function markKnown(catId, hanzi){
     if(!progress.known[catId]) progress.known[catId] = [];
@@ -1078,6 +1137,8 @@
   }
   function finishSession(){
     clearSessionUI();
+    progress.sessions = (progress.sessions || 0) + 1;
+    saveProgress();
     document.getElementById('sessionModal').hidden = false;
     chimeLevelUp();
     if(!prefersReducedMotion) burstConfetti();
@@ -1108,6 +1169,7 @@
 
   renderHeaderStats();
   showScreen('screen-home');
+  pullProgress();
 })();
 </script>
 </body>

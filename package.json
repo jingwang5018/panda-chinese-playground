@@ -1,0 +1,9 @@
+{
+  "name": "longbao-xue-zhongwen",
+  "version": "1.0.0",
+  "private": true,
+  "description": "龙宝学中文 - 给小朋友的中文练习网站",
+  "dependencies": {
+    "mongodb": "^6.0.0"
+  }
+}
