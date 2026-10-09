@@ -69,7 +69,7 @@
   body{ margin:0; background:var(--bg); color:var(--ink); font-family:var(--font-body); font-size:16px; }
   button:focus-visible{ outline:3px solid var(--blue-dark); outline-offset:2px; }
   /* elements below set their own display, which would otherwise beat the browser's [hidden] default */
-  .icon-btn[hidden], .timer-pill[hidden], .flash-stage[hidden], .quiz-stage[hidden], .pronounce-stage[hidden], .match-tile-front[hidden]{ display:none; }
+  .icon-btn[hidden], .timer-pill[hidden], .flash-stage[hidden], .quiz-stage[hidden], .pronounce-stage[hidden], .match-tile-front[hidden], .stats-pill[hidden], .user-chip[hidden], .chat-fab[hidden], .chat-panel[hidden], .chat-suggest[hidden]{ display:none; }
 
   .app-shell{ max-width:960px; margin:0 auto; padding-inline:20px; padding-block:20px 56px; display:flex; flex-direction:column; gap:24px; }
 
@@ -203,6 +203,54 @@
   .toast{ position:fixed; top:calc(env(safe-area-inset-top,0px) + 14px); left:50%; transform:translateX(-50%) translateY(-16px); background:var(--ink); color:var(--bg); padding:0.6em 1.3em; border-radius:999px; font-weight:800; font-family:var(--font-display); opacity:0; transition:opacity .3s ease, transform .3s ease; z-index:50; box-shadow:0 8px 20px var(--shadow); }
   .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
 
+  .user-chip{ display:flex; align-items:center; gap:8px; background:var(--surface); padding:0.4em 0.45em 0.4em 1em; border-radius:999px; box-shadow:0 2px 10px var(--shadow); font-family:var(--font-display); font-weight:700; font-size:0.85rem; max-width:100%; }
+  .user-name{ max-width:9em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .user-logout{ border:none; cursor:pointer; background:var(--bg-soft); color:var(--ink); font-family:var(--font-display); font-weight:800; font-size:0.78rem; padding:0.4em 0.9em; border-radius:999px; }
+
+  .loading-note{ text-align:center; color:var(--ink-soft); font-weight:700; margin:60px 0; }
+
+  .auth-card{ max-width:420px; margin:0 auto; background:var(--surface); border-radius:var(--radius-l); padding:28px 24px 26px; box-shadow:0 8px 24px var(--shadow); display:flex; flex-direction:column; align-items:stretch; gap:14px; }
+  .auth-hero{ display:flex; flex-direction:column; align-items:center; gap:10px; text-align:center; }
+  .auth-title{ font-family:var(--font-display); font-weight:800; font-size:var(--fs-h2); margin:0; text-wrap:balance; }
+  .auth-sub{ margin:0; font-size:0.88rem; font-weight:700; color:var(--ink-soft); }
+  .auth-tabs{ display:flex; gap:4px; padding:4px; background:var(--bg-soft); border-radius:999px; }
+  .auth-tab{ flex:1; border:none; cursor:pointer; background:transparent; color:var(--ink-soft); font-family:var(--font-display); font-weight:800; font-size:0.95rem; padding:0.55em 0; border-radius:999px; }
+  .auth-tab.is-active{ background:var(--surface); color:var(--ink); box-shadow:0 2px 8px var(--shadow); }
+  .auth-form{ display:flex; flex-direction:column; gap:6px; }
+  .auth-form label{ font-size:0.85rem; font-weight:800; margin-top:8px; }
+  .auth-form input[type="text"], .auth-form input[type="password"]{ font:inherit; font-size:16px; color:var(--ink); background:var(--bg); border:2px solid var(--border); border-radius:var(--radius-m); padding:0.7em 0.9em; width:100%; }
+  .auth-form input[type="text"]:focus, .auth-form input[type="password"]:focus{ outline:3px solid var(--blue-dark); outline-offset:1px; border-color:transparent; }
+  #confirmRow label{ display:block; margin-top:14px; }
+  #confirmRow input{ display:block; margin-top:6px; }
+  .show-pw{ display:flex; align-items:center; gap:8px; font-weight:700 !important; color:var(--ink-soft); cursor:pointer; }
+  .show-pw input{ width:1.1em; height:1.1em; accent-color:var(--red-dark); }
+  .field-hint{ margin:2px 0 0; font-size:0.78rem; font-weight:700; color:var(--ink-soft); }
+  .auth-error{ margin:8px 0 0; padding:0.7em 0.9em; border-radius:var(--radius-m); background:color-mix(in srgb, var(--red) 18%, var(--surface)); color:var(--ink); font-size:0.88rem; font-weight:800; }
+  .auth-submit{ margin-top:12px; width:100%; font-size:1.05rem; }
+  .auth-submit:disabled{ opacity:0.7; cursor:default; }
+
+  .sr-only{ position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+  .chat-fab{ position:fixed; right:16px; bottom:calc(env(safe-area-inset-bottom,0px) + 16px); z-index:45; display:flex; align-items:center; gap:8px; border:2px solid var(--border); cursor:pointer; background:var(--bg-soft); color:var(--ink); font-family:var(--font-display); font-weight:800; font-size:0.95rem; padding:0.4em 1.1em 0.4em 0.6em; border-radius:999px; box-shadow:0 8px 22px var(--shadow); }
+  .chat-fab .dragon-mascot{ display:inline-block; width:34px; height:34px; margin-top:7px; filter:none; }
+  .chat-panel{ position:fixed; right:16px; bottom:calc(env(safe-area-inset-bottom,0px) + 80px); z-index:46; width:min(380px, calc(100vw - 32px)); height:min(540px, calc(100vh - 112px)); display:flex; flex-direction:column; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-l); box-shadow:0 16px 40px var(--shadow); overflow:hidden; }
+  .chat-head{ display:flex; align-items:center; gap:12px; padding:10px 14px; background:var(--bg-soft); }
+  .chat-head .dragon-mascot{ width:38px; height:38px; margin-top:8px; filter:none; }
+  .chat-title{ font-family:var(--font-display); font-weight:800; font-size:1rem; line-height:1.15; }
+  .chat-subtitle{ font-size:0.74rem; font-weight:700; color:var(--ink-soft); }
+  .chat-close{ margin-left:auto; border:none; cursor:pointer; width:2.1em; height:2.1em; border-radius:50%; background:var(--surface); color:var(--ink); font-size:0.85rem; }
+  .chat-log{ flex:1; overflow-y:auto; padding:14px; display:flex; flex-direction:column; gap:10px; }
+  .chat-msg{ max-width:86%; padding:0.6em 0.9em; border-radius:1.1em; font-size:0.95rem; font-weight:600; line-height:1.55; white-space:pre-wrap; overflow-wrap:anywhere; }
+  .chat-msg.is-bot{ align-self:flex-start; background:var(--bg-soft); color:var(--ink); border-bottom-left-radius:0.3em; }
+  .chat-msg.is-user{ align-self:flex-end; background:var(--blue-dark); color:#fff; border-bottom-right-radius:0.3em; }
+  .chat-msg.is-note{ align-self:flex-start; background:transparent; border:2px dashed var(--border); color:var(--ink-soft); font-size:0.88rem; }
+  .chat-suggest{ display:flex; flex-wrap:wrap; gap:8px; padding:0 14px 10px; }
+  .chat-chip{ border:2px solid var(--border); background:transparent; color:var(--ink); font-family:var(--font-body); font-weight:800; font-size:0.82rem; padding:0.4em 0.85em; border-radius:999px; cursor:pointer; }
+  .chat-form{ display:flex; gap:8px; padding:10px 12px 12px; border-top:1px solid var(--border); }
+  .chat-form input{ flex:1; min-width:0; font:inherit; font-size:16px; color:var(--ink); background:var(--bg); border:2px solid var(--border); border-radius:999px; padding:0.6em 1em; }
+  .chat-form input:focus{ outline:3px solid var(--blue-dark); outline-offset:1px; border-color:transparent; }
+  .chat-send{ border:none; cursor:pointer; background:var(--red-dark); color:#fff; font-family:var(--font-display); font-weight:800; padding:0 1.3em; border-radius:999px; }
+  .chat-send:disabled{ opacity:0.6; cursor:default; }
+
   #confettiCanvas{ position:fixed; inset:0; pointer-events:none; z-index:40; }
 </style>
 </head>
@@ -231,15 +279,60 @@
         <span id="timerLabel">⏱ 25:00</span>
         <button type="button" class="timer-stop" id="stopSessionBtn" aria-label="结束练习">✕</button>
       </div>
-      <div class="stats-pill">
+      <div class="stats-pill" id="statsPill" hidden>
         <span class="stat-star">⭐ <span id="starCount">0</span></span>
         <span class="stat-level" id="levelLabel">小龙蛋</span>
+      </div>
+      <div class="user-chip" id="userChip" hidden>
+        <span class="user-name" id="userName"></span>
+        <button type="button" class="user-logout" id="logoutBtn">退出</button>
       </div>
     </div>
   </header>
 
   <main>
-    <section id="screen-home" class="screen">
+    <section id="screen-loading" class="screen">
+      <p class="loading-note">龙宝正在准备中…</p>
+    </section>
+
+    <section id="screen-auth" class="screen" hidden>
+      <div class="auth-card">
+        <div class="auth-hero">
+          <div class="dragon-mascot hero-dragon" aria-hidden="true">
+            <span class="fin left"></span><span class="fin right"></span>
+            <span class="horn left"></span><span class="horn right"></span>
+            <span class="face"></span>
+            <span class="eye left"><span class="pupil"></span></span>
+            <span class="eye right"><span class="pupil"></span></span>
+            <span class="nostril left"></span><span class="nostril right"></span>
+            <span class="mouth"></span>
+            <span class="blush left"></span><span class="blush right"></span>
+          </div>
+          <h2 class="auth-title">欢迎来到龙宝学中文</h2>
+          <p class="auth-sub">登录后，学习进度会保存在你自己的账号里，换设备也能接着学。</p>
+        </div>
+        <div class="auth-tabs" role="tablist" aria-label="登录或注册">
+          <button type="button" role="tab" class="auth-tab is-active" id="tabLogin" aria-selected="true">登录</button>
+          <button type="button" role="tab" class="auth-tab" id="tabRegister" aria-selected="false">注册新账号</button>
+        </div>
+        <form class="auth-form" id="authForm" novalidate>
+          <label for="authUsername">用户名</label>
+          <input type="text" id="authUsername" name="username" autocomplete="username" maxlength="20" autocapitalize="none" spellcheck="false" required>
+          <p class="field-hint" id="usernameHint" hidden>2-20 个字符，可以用中文、字母、数字和下划线</p>
+          <label for="authPassword">密码</label>
+          <input type="password" id="authPassword" name="password" autocomplete="current-password" maxlength="128" required>
+          <p class="field-hint" id="passwordHint" hidden>至少 8 位，需要同时包含字母和数字</p>
+          <div id="confirmRow" hidden>
+            <label for="authPassword2">再输入一次密码</label>
+            <input type="password" id="authPassword2" name="password2" autocomplete="new-password" maxlength="128">
+          </div>
+          <label class="show-pw" for="showPw"><input type="checkbox" id="showPw"> 显示密码</label>
+          <p class="auth-error" id="authError" role="alert" hidden></p>
+          <button type="submit" class="btn btn-primary auth-submit" id="authSubmit">登录</button>
+        </form>
+      </div>
+    </section>
+    <section id="screen-home" class="screen" hidden>
       <div class="home-hero">
         <div class="dragon-mascot hero-dragon" aria-hidden="true">
           <span class="fin left"></span><span class="fin right"></span>
@@ -400,6 +493,27 @@
   </main>
 </div>
 
+<button type="button" class="chat-fab" id="chatFab" hidden aria-expanded="false" aria-controls="chatPanel">
+  <span class="dragon-mascot" data-mascot aria-hidden="true"></span>
+  <span>问问龙宝</span>
+</button>
+<section class="chat-panel" id="chatPanel" role="dialog" aria-label="龙宝小助手" lang="zh-Hans" hidden>
+  <div class="chat-head">
+    <div class="dragon-mascot" data-mascot aria-hidden="true"></div>
+    <div>
+      <div class="chat-title">龙宝小助手</div>
+      <div class="chat-subtitle">问我中文和这个网站的问题吧</div>
+    </div>
+    <button type="button" class="chat-close" id="chatClose" aria-label="关闭小助手">✕</button>
+  </div>
+  <div class="chat-log" id="chatLog" role="log" aria-live="polite"></div>
+  <div class="chat-suggest" id="chatSuggest"></div>
+  <form class="chat-form" id="chatForm">
+    <label class="sr-only" for="chatInput">输入你的问题</label>
+    <input type="text" id="chatInput" maxlength="150" placeholder="比如：猫怎么读？" autocomplete="off">
+    <button type="submit" class="chat-send" id="chatSend">发送</button>
+  </form>
+</section>
 <div id="toast" class="toast" hidden></div>
 <div class="session-overlay" id="sessionModal" hidden>
   <div class="celebrate-panel">
@@ -413,66 +527,14 @@
 </div>
 <canvas id="confettiCanvas"></canvas>
 
+<script src="/vocab.js"></script>
 <script>
 (function(){
   "use strict";
 
   var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  var CATEGORIES = [
-    { id:'animals', name:'动物朋友', icon:'🐾', color:'var(--green)', words:[
-      {h:'猫', p:'māo', e:'cat', emoji:'🐱'},
-      {h:'狗', p:'gǒu', e:'dog', emoji:'🐶'},
-      {h:'兔', p:'tù', e:'rabbit', emoji:'🐰'},
-      {h:'鸟', p:'niǎo', e:'bird', emoji:'🐦'},
-      {h:'鱼', p:'yú', e:'fish', emoji:'🐟'},
-      {h:'老虎', p:'lǎohǔ', e:'tiger', emoji:'🐯'},
-      {h:'熊猫', p:'xióngmāo', e:'panda', emoji:'🐼'},
-      {h:'猴子', p:'hóuzi', e:'monkey', emoji:'🐵'}
-    ]},
-    { id:'colors', name:'颜色魔法', icon:'🎨', color:'var(--purple)', words:[
-      {h:'红色', p:'hóngsè', e:'red', emoji:'🔴'},
-      {h:'黄色', p:'huángsè', e:'yellow', emoji:'🟡'},
-      {h:'蓝色', p:'lánsè', e:'blue', emoji:'🔵'},
-      {h:'绿色', p:'lǜsè', e:'green', emoji:'🟢'},
-      {h:'紫色', p:'zǐsè', e:'purple', emoji:'🟣'},
-      {h:'黑色', p:'hēisè', e:'black', emoji:'⚫'},
-      {h:'白色', p:'báisè', e:'white', emoji:'⚪'},
-      {h:'橙色', p:'chéngsè', e:'orange', emoji:'🟠'}
-    ]},
-    { id:'numbers', name:'数字大冒险', icon:'🔢', color:'var(--gold)', words:[
-      {h:'一', p:'yī', e:'one', emoji:'1️⃣'},
-      {h:'二', p:'èr', e:'two', emoji:'2️⃣'},
-      {h:'三', p:'sān', e:'three', emoji:'3️⃣'},
-      {h:'四', p:'sì', e:'four', emoji:'4️⃣'},
-      {h:'五', p:'wǔ', e:'five', emoji:'5️⃣'},
-      {h:'六', p:'liù', e:'six', emoji:'6️⃣'},
-      {h:'七', p:'qī', e:'seven', emoji:'7️⃣'},
-      {h:'八', p:'bā', e:'eight', emoji:'8️⃣'},
-      {h:'九', p:'jiǔ', e:'nine', emoji:'9️⃣'},
-      {h:'十', p:'shí', e:'ten', emoji:'🔟'}
-    ]},
-    { id:'fruits', name:'水果篮子', icon:'🍎', color:'var(--red)', words:[
-      {h:'苹果', p:'píngguǒ', e:'apple', emoji:'🍎'},
-      {h:'香蕉', p:'xiāngjiāo', e:'banana', emoji:'🍌'},
-      {h:'西瓜', p:'xīguā', e:'watermelon', emoji:'🍉'},
-      {h:'草莓', p:'cǎoméi', e:'strawberry', emoji:'🍓'},
-      {h:'葡萄', p:'pútáo', e:'grape', emoji:'🍇'},
-      {h:'橙子', p:'chéngzi', e:'orange', emoji:'🍊'},
-      {h:'桃子', p:'táozi', e:'peach', emoji:'🍑'},
-      {h:'梨', p:'lí', e:'pear', emoji:'🍐'}
-    ]},
-    { id:'family', name:'我的家人', icon:'👪', color:'var(--blue)', words:[
-      {h:'爸爸', p:'bàba', e:'dad', emoji:'👨'},
-      {h:'妈妈', p:'māma', e:'mom', emoji:'👩'},
-      {h:'哥哥', p:'gēge', e:'big brother', emoji:'👦'},
-      {h:'姐姐', p:'jiějie', e:'big sister', emoji:'👧'},
-      {h:'弟弟', p:'dìdi', e:'little brother', emoji:'🧒'},
-      {h:'妹妹', p:'mèimei', e:'little sister', emoji:'👶'},
-      {h:'爷爷', p:'yéye', e:'grandpa', emoji:'👴'},
-      {h:'奶奶', p:'nǎinai', e:'grandma', emoji:'👵'}
-    ]}
-  ];
+  var CATEGORIES = window.LONGBAO_VOCAB;
 
   var LEVELS = [
     {min:0, name:'小龙蛋'},
@@ -482,49 +544,53 @@
     {min:100, name:'中文神龙'}
   ];
 
-  var STORAGE_KEY = 'pandaZhProgressV1';
-  var LEARNER_KEY = 'longbaoLearnerIdV1';
-  var API_URL = '/api/progress';
-  var progress = loadProgress();
-  var learnerId = getLearnerId();
+  var LEGACY_KEY = 'pandaZhProgressV1';
+  var LEGACY_HANDLED_KEY = 'longbaoLegacyHandledV1';
+  var currentUser = null;
+  var progress = emptyProgress();
   var syncTimer = null;
+
+  function emptyProgress(){ return {stars:0, known:{}, pronounced:{}, sessions:0}; }
+  function progressKey(){ return 'longbaoProgressV2:' + currentUser.id; }
+
+  function api(path, options){
+    options = options || {};
+    var init = {method: options.method || 'GET', headers:{}, cache:'no-store', credentials:'same-origin'};
+    if(options.body !== undefined){
+      init.headers['Content-Type'] = 'application/json';
+      init.body = JSON.stringify(options.body);
+    }
+    if(options.keepalive) init.keepalive = true;
+    return fetch(path, init).then(function(res){
+      return res.json().catch(function(){ return null; }).then(function(data){
+        return {ok:res.ok, status:res.status, data:data};
+      });
+    });
+  }
 
   function loadProgress(){
     try{
-      var raw = localStorage.getItem(STORAGE_KEY);
-      if(!raw) return {stars:0, known:{}, pronounced:{}, sessions:0};
+      var raw = localStorage.getItem(progressKey());
+      if(!raw) return emptyProgress();
       var parsed = JSON.parse(raw);
       return {stars:parsed.stars||0, known:parsed.known||{}, pronounced:parsed.pronounced||{}, sessions:parsed.sessions||0};
-    }catch(e){ return {stars:0, known:{}, pronounced:{}, sessions:0}; }
-  }
-  function makeLearnerId(){
-    if(window.crypto && crypto.randomUUID) return crypto.randomUUID();
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c){
-      var r = Math.random()*16|0;
-      return (c === 'x' ? r : (r&0x3|0x8)).toString(16);
-    });
-  }
-  function getLearnerId(){
-    try{
-      var id = localStorage.getItem(LEARNER_KEY);
-      if(!id){ id = makeLearnerId(); localStorage.setItem(LEARNER_KEY, id); }
-      return id;
-    }catch(e){ return makeLearnerId(); }
+    }catch(e){ return emptyProgress(); }
   }
   function saveProgress(){
-    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); }catch(e){}
+    if(!currentUser) return;
+    try{ localStorage.setItem(progressKey(), JSON.stringify(progress)); }catch(e){}
     clearTimeout(syncTimer);
     syncTimer = setTimeout(pushProgress, 800);
   }
   function pushProgress(){
-    try{
-      fetch(API_URL, {
-        method:'PUT',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({id:learnerId, stars:progress.stars, sessions:progress.sessions||0, known:progress.known, pronounced:progress.pronounced}),
-        keepalive:true
-      }).catch(function(){});
-    }catch(e){}
+    if(!currentUser) return Promise.resolve();
+    return api('/api/progress', {
+      method:'PUT',
+      keepalive:true,
+      body:{stars:progress.stars, sessions:progress.sessions||0, known:progress.known, pronounced:progress.pronounced}
+    }).then(function(r){
+      if(r.status === 401) handleSessionExpired();
+    }).catch(function(){});
   }
   function unionMap(a, b){
     var out = {};
@@ -536,21 +602,39 @@
     });
     return out;
   }
+  function mergeProgress(remote){
+    progress.stars = Math.max(progress.stars||0, remote.stars||0);
+    progress.sessions = Math.max(progress.sessions||0, remote.sessions||0);
+    progress.known = unionMap(progress.known, remote.known);
+    progress.pronounced = unionMap(progress.pronounced, remote.pronounced);
+  }
   function pullProgress(){
+    var userAtStart = currentUser;
+    api('/api/progress').then(function(r){
+      if(currentUser !== userAtStart) return;
+      if(r.status === 401){ handleSessionExpired(); return; }
+      if(r.status === 404){ pushProgress(); return; }
+      if(!r.ok || !r.data) return;
+      mergeProgress(r.data);
+      saveProgress();
+      renderHeaderStats();
+    }).catch(function(){});
+  }
+  function offerLegacyImport(){
     try{
-      fetch(API_URL + '?id=' + encodeURIComponent(learnerId), {cache:'no-store'}).then(function(res){
-        if(res.status === 404){ pushProgress(); return null; }
-        if(!res.ok) return null;
-        return res.json();
-      }).then(function(remote){
-        if(!remote) return;
-        progress.stars = Math.max(progress.stars||0, remote.stars||0);
-        progress.sessions = Math.max(progress.sessions||0, remote.sessions||0);
-        progress.known = unionMap(progress.known, remote.known);
-        progress.pronounced = unionMap(progress.pronounced, remote.pronounced);
-        saveProgress();
-        renderHeaderStats();
-      }).catch(function(){});
+      if(localStorage.getItem(LEGACY_HANDLED_KEY)) return;
+      localStorage.setItem(LEGACY_HANDLED_KEY, '1');
+      var raw = localStorage.getItem(LEGACY_KEY);
+      if(!raw) return;
+      var old = JSON.parse(raw);
+      var hasData = (old.stars > 0) || Object.keys(old.known || {}).length > 0;
+      if(!hasData) return;
+      var ok = window.confirm('这台设备上有之前的学习记录（' + (old.stars || 0) + ' 颗星）。\n要把它导入到当前账号「' + currentUser.username + '」吗？');
+      if(!ok) return;
+      mergeProgress({stars:old.stars, sessions:old.sessions, known:old.known, pronounced:old.pronounced});
+      saveProgress();
+      renderHeaderStats();
+      showToast('已导入之前的学习记录');
     }catch(e){}
   }
   function knownCountFor(catId){ return (progress.known[catId]||[]).length; }
@@ -696,7 +780,7 @@
   function showScreen(id){
     currentScreen = id;
     document.querySelectorAll('.screen').forEach(function(s){ s.hidden = (s.id !== id); });
-    document.getElementById('backBtn').hidden = (id === 'screen-home');
+    document.getElementById('backBtn').hidden = (id === 'screen-home' || id === 'screen-auth' || id === 'screen-loading');
   }
 
   function renderCategoryGrid(){
@@ -1098,7 +1182,7 @@
   }
 
   /* ---------- Practice session timer ---------- */
-  var SESSION_KEY = 'pandaZhSessionEndV1';
+  function sessionKey(){ return 'longbaoSessionEndV2:' + (currentUser ? currentUser.id : 'anonymous'); }
   var SESSION_MINUTES = 25;
   var sessionInterval = null;
   var sessionEndAt = null;
@@ -1123,17 +1207,21 @@
   }
   function startSession(minutes){
     sessionEndAt = Date.now() + minutes*60*1000;
-    try{ localStorage.setItem(SESSION_KEY, String(sessionEndAt)); }catch(e){}
+    try{ localStorage.setItem(sessionKey(), String(sessionEndAt)); }catch(e){}
     beginSessionUI();
   }
-  function clearSessionUI(){
+  function suspendSessionUI(){
     clearInterval(sessionInterval);
     sessionInterval = null;
     sessionEndAt = null;
-    try{ localStorage.removeItem(SESSION_KEY); }catch(e){}
     document.getElementById('timerPill').hidden = true;
     document.getElementById('startSessionBtn').hidden = false;
     document.getElementById('sessionHint').hidden = true;
+    document.getElementById('sessionModal').hidden = true;
+  }
+  function clearSessionUI(){
+    try{ localStorage.removeItem(sessionKey()); }catch(e){}
+    suspendSessionUI();
   }
   function finishSession(){
     clearSessionUI();
@@ -1152,24 +1240,247 @@
   document.getElementById('endSessionBtn').addEventListener('click', function(){
     document.getElementById('sessionModal').hidden = true;
   });
-  (function resumeSession(){
+  function resumeSession(){
     try{
-      var raw = localStorage.getItem(SESSION_KEY);
+      var raw = localStorage.getItem(sessionKey());
       if(raw){
         var endAt = parseInt(raw, 10);
         if(endAt && endAt > Date.now()){
           sessionEndAt = endAt;
           beginSessionUI();
         } else {
-          localStorage.removeItem(SESSION_KEY);
+          localStorage.removeItem(sessionKey());
         }
       }
     }catch(e){}
-  })();
+  }
 
-  renderHeaderStats();
-  showScreen('screen-home');
-  pullProgress();
+  /* ---------- Accounts: register / login / logout ---------- */
+  var authMode = 'login';
+  var authBusy = false;
+  var USERNAME_RE = /^[A-Za-z0-9_一-龥]{2,20}$/;
+
+  function el(id){ return document.getElementById(id); }
+
+  function showAuthError(message){
+    var box = el('authError');
+    box.textContent = message || '';
+    box.hidden = !message;
+  }
+  function authSubmitLabel(){ return authMode === 'register' ? '注册并开始学习' : '登录'; }
+  function setAuthBusy(busy){
+    authBusy = busy;
+    el('authSubmit').disabled = busy;
+    el('authSubmit').textContent = busy ? '请稍等…' : authSubmitLabel();
+  }
+  function setAuthMode(mode){
+    authMode = mode;
+    var isRegister = mode === 'register';
+    el('tabLogin').classList.toggle('is-active', !isRegister);
+    el('tabRegister').classList.toggle('is-active', isRegister);
+    el('tabLogin').setAttribute('aria-selected', String(!isRegister));
+    el('tabRegister').setAttribute('aria-selected', String(isRegister));
+    el('usernameHint').hidden = !isRegister;
+    el('passwordHint').hidden = !isRegister;
+    el('confirmRow').hidden = !isRegister;
+    el('authPassword').setAttribute('autocomplete', isRegister ? 'new-password' : 'current-password');
+    el('authSubmit').textContent = authSubmitLabel();
+    showAuthError('');
+  }
+  function validateRegister(username, password, password2){
+    if(!USERNAME_RE.test(username)) return '用户名需要 2-20 个字符，只能包含中文、字母、数字和下划线';
+    if(password.length < 8 || password.length > 128) return '密码需要 8-128 个字符';
+    if(!/[A-Za-z]/.test(password) || !/\d/.test(password)) return '密码需要同时包含字母和数字';
+    if(password.toLowerCase() === username.toLowerCase()) return '密码不能和用户名相同';
+    if(password !== password2) return '两次输入的密码不一样，请再检查一下';
+    return '';
+  }
+  function resetAuthForm(){
+    el('authUsername').value = '';
+    el('authPassword').value = '';
+    el('authPassword2').value = '';
+    el('showPw').checked = false;
+    el('authPassword').type = 'password';
+    el('authPassword2').type = 'password';
+  }
+
+  function showAuth(message){
+    clearTimeout(syncTimer);
+    currentUser = null;
+    progress = emptyProgress();
+    suspendSessionUI();
+    el('userChip').hidden = true;
+    el('statsPill').hidden = true;
+    closeChat();
+    el('chatFab').hidden = true;
+    chatHistory = [];
+    resetAuthForm();
+    setAuthMode('login');
+    if(message) showAuthError(message);
+    showScreen('screen-auth');
+  }
+  function handleSessionExpired(){
+    if(currentUser) showAuth('登录已过期，请重新登录');
+  }
+  function bootApp(user){
+    currentUser = user;
+    progress = loadProgress();
+    el('userName').textContent = user.username;
+    el('userChip').hidden = false;
+    el('statsPill').hidden = false;
+    el('chatFab').hidden = false;
+    resetChat();
+    renderHeaderStats();
+    showScreen('screen-home');
+    resumeSession();
+    pullProgress();
+    setTimeout(function(){ if(currentUser === user) offerLegacyImport(); }, 400);
+  }
+
+  el('tabLogin').addEventListener('click', function(){ setAuthMode('login'); });
+  el('tabRegister').addEventListener('click', function(){ setAuthMode('register'); });
+  el('showPw').addEventListener('change', function(){
+    var type = this.checked ? 'text' : 'password';
+    el('authPassword').type = type;
+    el('authPassword2').type = type;
+  });
+  el('authForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    if(authBusy) return;
+    var username = el('authUsername').value.trim();
+    var password = el('authPassword').value;
+    if(!username || !password){ showAuthError('请输入用户名和密码'); return; }
+    if(authMode === 'register'){
+      var problem = validateRegister(username, password, el('authPassword2').value);
+      if(problem){ showAuthError(problem); return; }
+    }
+    showAuthError('');
+    setAuthBusy(true);
+    api('/api/auth/' + authMode, {method:'POST', body:{username:username, password:password}}).then(function(r){
+      setAuthBusy(false);
+      if(r.ok && r.data && r.data.user){
+        resetAuthForm();
+        bootApp(r.data.user);
+      } else {
+        showAuthError((r.data && r.data.error) || '出错了，请稍后再试');
+      }
+    }).catch(function(){
+      setAuthBusy(false);
+      showAuthError('网络好像断开了，请检查网络后再试');
+    });
+  });
+  el('logoutBtn').addEventListener('click', function(){
+    clearTimeout(syncTimer);
+    pushProgress().then(function(){
+      return api('/api/auth/logout', {method:'POST', body:{}});
+    }).then(function(){
+      showAuth();
+    }).catch(function(){
+      showToast('退出失败，请检查网络后再试');
+    });
+  });
+
+  /* ---------- Chat helper (Claude) ---------- */
+  var MASCOT_HTML =
+    '<span class="fin left"></span><span class="fin right"></span>' +
+    '<span class="horn left"></span><span class="horn right"></span>' +
+    '<span class="face"></span>' +
+    '<span class="eye left"><span class="pupil"></span></span><span class="eye right"><span class="pupil"></span></span>' +
+    '<span class="nostril left"></span><span class="nostril right"></span>' +
+    '<span class="mouth"></span>' +
+    '<span class="blush left"></span><span class="blush right"></span>';
+  document.querySelectorAll('[data-mascot]').forEach(function(node){ node.innerHTML = MASCOT_HTML; });
+
+  var CHAT_SUGGESTIONS = ['「猫」怎么读？', '教我几个水果的词', '怎么玩配对游戏？', '星星有什么用？'];
+  var chatHistory = [];
+  var chatBusy = false;
+
+  function addChatBubble(kind, text){
+    var bubble = document.createElement('div');
+    bubble.className = 'chat-msg is-' + kind;
+    bubble.textContent = text;
+    var log = el('chatLog');
+    log.appendChild(bubble);
+    log.scrollTop = log.scrollHeight;
+    return bubble;
+  }
+  function setChatBusy(busy){
+    chatBusy = busy;
+    el('chatSend').disabled = busy;
+  }
+  function resetChat(){
+    chatHistory = [];
+    el('chatLog').innerHTML = '';
+    addChatBubble('bot', '你好呀，我是龙宝！你可以问我词语怎么读、是什么意思，也可以问这些游戏怎么玩。');
+    var box = el('chatSuggest');
+    box.innerHTML = '';
+    CHAT_SUGGESTIONS.forEach(function(question){
+      var chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'chat-chip';
+      chip.textContent = question;
+      chip.addEventListener('click', function(){ sendChat(question); });
+      box.appendChild(chip);
+    });
+    box.hidden = false;
+    setChatBusy(false);
+  }
+  function openChat(){
+    el('chatPanel').hidden = false;
+    el('chatFab').setAttribute('aria-expanded', 'true');
+    el('chatInput').focus();
+  }
+  function closeChat(){
+    el('chatPanel').hidden = true;
+    el('chatFab').setAttribute('aria-expanded', 'false');
+  }
+  function sendChat(text){
+    text = String(text || '').trim();
+    if(!text || chatBusy || !currentUser) return;
+    addChatBubble('user', text);
+    el('chatSuggest').hidden = true;
+    el('chatInput').value = '';
+    chatHistory.push({role:'user', content:text});
+    if(chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
+    var sending = chatHistory.slice(-9);
+    while(sending.length && sending[0].role !== 'user') sending.shift();
+    setChatBusy(true);
+    var thinking = addChatBubble('note', '龙宝正在想…');
+    api('/api/chat', {method:'POST', body:{messages:sending}}).then(function(r){
+      thinking.remove();
+      if(r.ok && r.data && r.data.reply){
+        chatHistory.push({role:'assistant', content:r.data.reply});
+        addChatBubble('bot', r.data.reply);
+        return;
+      }
+      chatHistory.pop();
+      if(r.status === 401){ handleSessionExpired(); return; }
+      addChatBubble('note', (r.data && r.data.error) || '龙宝刚刚走神了，请再问一次');
+    }).catch(function(){
+      thinking.remove();
+      chatHistory.pop();
+      addChatBubble('note', '网络好像断开了，请检查网络后再问一次');
+    }).then(function(){ setChatBusy(false); });
+  }
+  el('chatFab').addEventListener('click', function(){
+    if(el('chatPanel').hidden) openChat(); else closeChat();
+  });
+  el('chatClose').addEventListener('click', function(){ closeChat(); el('chatFab').focus(); });
+  el('chatPanel').addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){ closeChat(); el('chatFab').focus(); }
+  });
+  el('chatForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    sendChat(el('chatInput').value);
+  });
+
+  showScreen('screen-loading');
+  api('/api/auth/me').then(function(r){
+    if(r.ok && r.data && r.data.user) bootApp(r.data.user);
+    else showAuth();
+  }).catch(function(){
+    showAuth('连不上服务器，请检查网络后刷新页面');
+  });
 })();
 </script>
 </body>

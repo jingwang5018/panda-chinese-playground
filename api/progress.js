@@ -1,18 +1,6 @@
-const { MongoClient } = require('mongodb');
+const { getCollection } = require('./_lib/db');
+const { send, serverError, guardWrite, getSessionUser } = require('./_lib/auth');
 
-let clientPromise = null;
-function getClient() {
-  if (!clientPromise) {
-    clientPromise = new MongoClient(process.env.MONGODB_URI, {
-      maxPoolSize: 5,
-      serverSelectionTimeoutMS: 8000
-    }).connect();
-    clientPromise.catch(() => { clientPromise = null; });
-  }
-  return clientPromise;
-}
-
-const ID_RE = /^[a-zA-Z0-9-]{16,64}$/;
 const CAT_RE = /^[a-z]{1,20}$/;
 
 function cleanWordMap(input) {
@@ -37,18 +25,15 @@ function cleanCount(value) {
 }
 
 module.exports = async function handler(req, res) {
-  res.setHeader('Cache-Control', 'no-store');
-
   try {
+    const user = await getSessionUser(req);
+    if (!user) return send(res, 401, { error: 'unauthorized' });
+
     if (req.method === 'GET') {
-      const id = req.query && req.query.id;
-      if (typeof id !== 'string' || !ID_RE.test(id)) {
-        return res.status(400).json({ error: 'invalid id' });
-      }
-      const client = await getClient();
-      const doc = await client.db().collection('progress').findOne({ _id: id });
-      if (!doc) return res.status(404).json({ error: 'not found' });
-      return res.status(200).json({
+      const progress = await getCollection('progress');
+      const doc = await progress.findOne({ _id: user.id });
+      if (!doc) return send(res, 404, { error: 'not found' });
+      return send(res, 200, {
         stars: doc.stars || 0,
         known: doc.known || {},
         pronounced: doc.pronounced || {},
@@ -57,35 +42,32 @@ module.exports = async function handler(req, res) {
       });
     }
 
-    if (req.method === 'PUT' || req.method === 'POST') {
-      const body = req.body && typeof req.body === 'object' ? req.body : null;
-      if (!body || typeof body.id !== 'string' || !ID_RE.test(body.id)) {
-        return res.status(400).json({ error: 'invalid id' });
-      }
+    if (req.method === 'PUT') {
+      if (!guardWrite(req, res)) return;
+      const body = req.body && typeof req.body === 'object' ? req.body : {};
       const stars = cleanCount(body.stars);
       const sessions = cleanCount(body.sessions);
       const known = cleanWordMap(body.known);
       const pronounced = cleanWordMap(body.pronounced);
       if (stars === null || sessions === null || known === null || pronounced === null) {
-        return res.status(400).json({ error: 'invalid data' });
+        return send(res, 400, { error: 'invalid data' });
       }
       const now = new Date();
-      const client = await getClient();
-      await client.db().collection('progress').updateOne(
-        { _id: body.id },
+      const progress = await getCollection('progress');
+      await progress.updateOne(
+        { _id: user.id },
         {
           $set: { stars, sessions, known, pronounced, updatedAt: now },
           $setOnInsert: { createdAt: now }
         },
         { upsert: true }
       );
-      return res.status(200).json({ ok: true, updatedAt: now });
+      return send(res, 200, { ok: true, updatedAt: now });
     }
 
-    res.setHeader('Allow', 'GET, PUT, POST');
-    return res.status(405).json({ error: 'method not allowed' });
+    res.setHeader('Allow', 'GET, PUT');
+    return send(res, 405, { error: 'method not allowed' });
   } catch (err) {
-    console.error('progress api error:', err && err.message);
-    return res.status(500).json({ error: 'server error' });
+    return serverError(res, err);
   }
 };

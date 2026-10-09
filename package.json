@@ -4,6 +4,7 @@
   "private": true,
   "description": "龙宝学中文 - 给小朋友的中文练习网站",
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.133.0",
     "mongodb": "^6.0.0"
   }
 }
