@@ -1,10 +1,12 @@
 const Anthropic = require('@anthropic-ai/sdk');
 const vocab = require('../vocab.js');
-const { send, tooMany, serverError, guardWrite, getSessionUser, clientIp, hitLimit } = require('./_lib/auth');
+const { send, tooMany, serverError, guardWrite, clientIp, hitLimit } = require('./_lib/http');
 
 const MODEL = process.env.ANTHROPIC_MODEL || 'claude-haiku-4-5';
 const MAX_MESSAGES = 12;
 const MAX_CHARS = 300;
+const IP_HOURLY_LIMIT = 60;
+const DAILY_LIMIT = Number(process.env.CHAT_DAILY_LIMIT) || 300;
 
 let client = null;
 function getClient() {
@@ -34,7 +36,7 @@ function buildSystemPrompt() {
     '- 小测验：看图片和拼音，选出正确的汉字。答对一题得 2 颗星，全对或答对 80% 以上再奖励 5 颗星。',
     '- 星星会让小朋友升级：小龙蛋（0 颗）、云间小龙（15 颗）、汉字飞龙（35 颗）、中文金龙（60 颗）、中文神龙（100 颗）。',
     '- 首页有「开始 25 分钟练习」按钮，时间到了龙宝会提醒小朋友休息眼睛。',
-    '- 学习进度保存在每个人自己的账号里，换设备登录也能接着学。',
+    '- 网站不需要注册登录，打开就能玩。学习进度会自动保存，用同一个设备和浏览器再打开就能接着学。',
     '',
     '【回答规则】',
     '1. 用简单、温暖的中文回答，句子要短，像在和小朋友聊天，一般不超过 4 句话。',
@@ -72,15 +74,17 @@ module.exports = async function handler(req, res) {
     }
     if (!guardWrite(req, res)) return;
 
-    const user = await getSessionUser(req);
-    if (!user) return send(res, 401, { error: 'unauthorized' });
-
     const messages = cleanMessages(req.body && req.body.messages);
     if (!messages) return send(res, 400, { error: '消息格式不对，请换个问法再试试' });
 
-    const userOk = await hitLimit('chat:user:' + user.id, 30, 3600);
-    const ipOk = await hitLimit('chat:ip:' + clientIp(req), 120, 3600);
-    if (!userOk || !ipOk) return tooMany(res, '今天问得有点多啦，休息一会儿再来问龙宝吧');
+    // No login, so protect the API key: a per-IP hourly limit plus a global daily cap.
+    if (!(await hitLimit('chat:ip:' + clientIp(req), IP_HOURLY_LIMIT, 3600))) {
+      return tooMany(res, '问得有点多啦，休息一会儿再来问龙宝吧');
+    }
+    const today = new Date().toISOString().slice(0, 10);
+    if (!(await hitLimit('chat:day:' + today, DAILY_LIMIT, 172800))) {
+      return send(res, 429, { error: '龙宝今天回答了好多问题，累啦，明天再来问我吧' });
+    }
 
     const response = await getClient().messages.create({
       model: MODEL,

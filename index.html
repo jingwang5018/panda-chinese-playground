@@ -69,7 +69,7 @@
   body{ margin:0; background:var(--bg); color:var(--ink); font-family:var(--font-body); font-size:16px; }
   button:focus-visible{ outline:3px solid var(--blue-dark); outline-offset:2px; }
   /* elements below set their own display, which would otherwise beat the browser's [hidden] default */
-  .icon-btn[hidden], .timer-pill[hidden], .flash-stage[hidden], .quiz-stage[hidden], .pronounce-stage[hidden], .match-tile-front[hidden], .stats-pill[hidden], .user-chip[hidden], .chat-fab[hidden], .chat-panel[hidden], .chat-suggest[hidden]{ display:none; }
+  .icon-btn[hidden], .timer-pill[hidden], .flash-stage[hidden], .quiz-stage[hidden], .pronounce-stage[hidden], .match-tile-front[hidden], .chat-fab[hidden], .chat-panel[hidden], .chat-suggest[hidden]{ display:none; }
 
   .app-shell{ max-width:960px; margin:0 auto; padding-inline:20px; padding-block:20px 56px; display:flex; flex-direction:column; gap:24px; }
 
@@ -203,32 +203,6 @@
   .toast{ position:fixed; top:calc(env(safe-area-inset-top,0px) + 14px); left:50%; transform:translateX(-50%) translateY(-16px); background:var(--ink); color:var(--bg); padding:0.6em 1.3em; border-radius:999px; font-weight:800; font-family:var(--font-display); opacity:0; transition:opacity .3s ease, transform .3s ease; z-index:50; box-shadow:0 8px 20px var(--shadow); }
   .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
 
-  .user-chip{ display:flex; align-items:center; gap:8px; background:var(--surface); padding:0.4em 0.45em 0.4em 1em; border-radius:999px; box-shadow:0 2px 10px var(--shadow); font-family:var(--font-display); font-weight:700; font-size:0.85rem; max-width:100%; }
-  .user-name{ max-width:9em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .user-logout{ border:none; cursor:pointer; background:var(--bg-soft); color:var(--ink); font-family:var(--font-display); font-weight:800; font-size:0.78rem; padding:0.4em 0.9em; border-radius:999px; }
-
-  .loading-note{ text-align:center; color:var(--ink-soft); font-weight:700; margin:60px 0; }
-
-  .auth-card{ max-width:420px; margin:0 auto; background:var(--surface); border-radius:var(--radius-l); padding:28px 24px 26px; box-shadow:0 8px 24px var(--shadow); display:flex; flex-direction:column; align-items:stretch; gap:14px; }
-  .auth-hero{ display:flex; flex-direction:column; align-items:center; gap:10px; text-align:center; }
-  .auth-title{ font-family:var(--font-display); font-weight:800; font-size:var(--fs-h2); margin:0; text-wrap:balance; }
-  .auth-sub{ margin:0; font-size:0.88rem; font-weight:700; color:var(--ink-soft); }
-  .auth-tabs{ display:flex; gap:4px; padding:4px; background:var(--bg-soft); border-radius:999px; }
-  .auth-tab{ flex:1; border:none; cursor:pointer; background:transparent; color:var(--ink-soft); font-family:var(--font-display); font-weight:800; font-size:0.95rem; padding:0.55em 0; border-radius:999px; }
-  .auth-tab.is-active{ background:var(--surface); color:var(--ink); box-shadow:0 2px 8px var(--shadow); }
-  .auth-form{ display:flex; flex-direction:column; gap:6px; }
-  .auth-form label{ font-size:0.85rem; font-weight:800; margin-top:8px; }
-  .auth-form input[type="text"], .auth-form input[type="password"]{ font:inherit; font-size:16px; color:var(--ink); background:var(--bg); border:2px solid var(--border); border-radius:var(--radius-m); padding:0.7em 0.9em; width:100%; }
-  .auth-form input[type="text"]:focus, .auth-form input[type="password"]:focus{ outline:3px solid var(--blue-dark); outline-offset:1px; border-color:transparent; }
-  #confirmRow label{ display:block; margin-top:14px; }
-  #confirmRow input{ display:block; margin-top:6px; }
-  .show-pw{ display:flex; align-items:center; gap:8px; font-weight:700 !important; color:var(--ink-soft); cursor:pointer; }
-  .show-pw input{ width:1.1em; height:1.1em; accent-color:var(--red-dark); }
-  .field-hint{ margin:2px 0 0; font-size:0.78rem; font-weight:700; color:var(--ink-soft); }
-  .auth-error{ margin:8px 0 0; padding:0.7em 0.9em; border-radius:var(--radius-m); background:color-mix(in srgb, var(--red) 18%, var(--surface)); color:var(--ink); font-size:0.88rem; font-weight:800; }
-  .auth-submit{ margin-top:12px; width:100%; font-size:1.05rem; }
-  .auth-submit:disabled{ opacity:0.7; cursor:default; }
-
   .sr-only{ position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
   .chat-fab{ position:fixed; right:16px; bottom:calc(env(safe-area-inset-bottom,0px) + 16px); z-index:45; display:flex; align-items:center; gap:8px; border:2px solid var(--border); cursor:pointer; background:var(--bg-soft); color:var(--ink); font-family:var(--font-display); font-weight:800; font-size:0.95rem; padding:0.4em 1.1em 0.4em 0.6em; border-radius:999px; box-shadow:0 8px 22px var(--shadow); }
   .chat-fab .dragon-mascot{ display:inline-block; width:34px; height:34px; margin-top:7px; filter:none; }
@@ -279,60 +253,15 @@
         <span id="timerLabel">⏱ 25:00</span>
         <button type="button" class="timer-stop" id="stopSessionBtn" aria-label="结束练习">✕</button>
       </div>
-      <div class="stats-pill" id="statsPill" hidden>
+      <div class="stats-pill">
         <span class="stat-star">⭐ <span id="starCount">0</span></span>
         <span class="stat-level" id="levelLabel">小龙蛋</span>
-      </div>
-      <div class="user-chip" id="userChip" hidden>
-        <span class="user-name" id="userName"></span>
-        <button type="button" class="user-logout" id="logoutBtn">退出</button>
       </div>
     </div>
   </header>
 
   <main>
-    <section id="screen-loading" class="screen">
-      <p class="loading-note">龙宝正在准备中…</p>
-    </section>
-
-    <section id="screen-auth" class="screen" hidden>
-      <div class="auth-card">
-        <div class="auth-hero">
-          <div class="dragon-mascot hero-dragon" aria-hidden="true">
-            <span class="fin left"></span><span class="fin right"></span>
-            <span class="horn left"></span><span class="horn right"></span>
-            <span class="face"></span>
-            <span class="eye left"><span class="pupil"></span></span>
-            <span class="eye right"><span class="pupil"></span></span>
-            <span class="nostril left"></span><span class="nostril right"></span>
-            <span class="mouth"></span>
-            <span class="blush left"></span><span class="blush right"></span>
-          </div>
-          <h2 class="auth-title">欢迎来到龙宝学中文</h2>
-          <p class="auth-sub">登录后，学习进度会保存在你自己的账号里，换设备也能接着学。</p>
-        </div>
-        <div class="auth-tabs" role="tablist" aria-label="登录或注册">
-          <button type="button" role="tab" class="auth-tab is-active" id="tabLogin" aria-selected="true">登录</button>
-          <button type="button" role="tab" class="auth-tab" id="tabRegister" aria-selected="false">注册新账号</button>
-        </div>
-        <form class="auth-form" id="authForm" novalidate>
-          <label for="authUsername">用户名</label>
-          <input type="text" id="authUsername" name="username" autocomplete="username" maxlength="20" autocapitalize="none" spellcheck="false" required>
-          <p class="field-hint" id="usernameHint" hidden>2-20 个字符，可以用中文、字母、数字和下划线</p>
-          <label for="authPassword">密码</label>
-          <input type="password" id="authPassword" name="password" autocomplete="current-password" maxlength="128" required>
-          <p class="field-hint" id="passwordHint" hidden>至少 8 位，需要同时包含字母和数字</p>
-          <div id="confirmRow" hidden>
-            <label for="authPassword2">再输入一次密码</label>
-            <input type="password" id="authPassword2" name="password2" autocomplete="new-password" maxlength="128">
-          </div>
-          <label class="show-pw" for="showPw"><input type="checkbox" id="showPw"> 显示密码</label>
-          <p class="auth-error" id="authError" role="alert" hidden></p>
-          <button type="submit" class="btn btn-primary auth-submit" id="authSubmit">登录</button>
-        </form>
-      </div>
-    </section>
-    <section id="screen-home" class="screen" hidden>
+    <section id="screen-home" class="screen">
       <div class="home-hero">
         <div class="dragon-mascot hero-dragon" aria-hidden="true">
           <span class="fin left"></span><span class="fin right"></span>
@@ -544,18 +473,36 @@
     {min:100, name:'中文神龙'}
   ];
 
+  var PROGRESS_KEY = 'longbaoProgressV3';
+  var LEARNER_KEY = 'longbaoLearnerIdV1';
+  var LEGACY_MERGED_KEY = 'longbaoLegacyMergedV1';
   var LEGACY_KEY = 'pandaZhProgressV1';
-  var LEGACY_HANDLED_KEY = 'longbaoLegacyHandledV1';
-  var currentUser = null;
-  var progress = emptyProgress();
+  var LEGACY_ACCOUNT_PREFIX = 'longbaoProgressV2:';
+  var learnerId = getLearnerId();
+  var progress = loadProgress();
   var syncTimer = null;
 
+  function el(id){ return document.getElementById(id); }
   function emptyProgress(){ return {stars:0, known:{}, pronounced:{}, sessions:0}; }
-  function progressKey(){ return 'longbaoProgressV2:' + currentUser.id; }
+
+  function makeLearnerId(){
+    if(window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c){
+      var r = Math.random()*16|0;
+      return (c === 'x' ? r : (r&0x3|0x8)).toString(16);
+    });
+  }
+  function getLearnerId(){
+    try{
+      var id = localStorage.getItem(LEARNER_KEY);
+      if(!id){ id = makeLearnerId(); localStorage.setItem(LEARNER_KEY, id); }
+      return id;
+    }catch(e){ return makeLearnerId(); }
+  }
 
   function api(path, options){
     options = options || {};
-    var init = {method: options.method || 'GET', headers:{}, cache:'no-store', credentials:'same-origin'};
+    var init = {method: options.method || 'GET', headers:{}, cache:'no-store'};
     if(options.body !== undefined){
       init.headers['Content-Type'] = 'application/json';
       init.body = JSON.stringify(options.body);
@@ -570,26 +517,22 @@
 
   function loadProgress(){
     try{
-      var raw = localStorage.getItem(progressKey());
+      var raw = localStorage.getItem(PROGRESS_KEY);
       if(!raw) return emptyProgress();
       var parsed = JSON.parse(raw);
       return {stars:parsed.stars||0, known:parsed.known||{}, pronounced:parsed.pronounced||{}, sessions:parsed.sessions||0};
     }catch(e){ return emptyProgress(); }
   }
   function saveProgress(){
-    if(!currentUser) return;
-    try{ localStorage.setItem(progressKey(), JSON.stringify(progress)); }catch(e){}
+    try{ localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress)); }catch(e){}
     clearTimeout(syncTimer);
     syncTimer = setTimeout(pushProgress, 800);
   }
   function pushProgress(){
-    if(!currentUser) return Promise.resolve();
     return api('/api/progress', {
       method:'PUT',
       keepalive:true,
-      body:{stars:progress.stars, sessions:progress.sessions||0, known:progress.known, pronounced:progress.pronounced}
-    }).then(function(r){
-      if(r.status === 401) handleSessionExpired();
+      body:{id:learnerId, stars:progress.stars, sessions:progress.sessions||0, known:progress.known, pronounced:progress.pronounced}
     }).catch(function(){});
   }
   function unionMap(a, b){
@@ -602,17 +545,14 @@
     });
     return out;
   }
-  function mergeProgress(remote){
-    progress.stars = Math.max(progress.stars||0, remote.stars||0);
-    progress.sessions = Math.max(progress.sessions||0, remote.sessions||0);
-    progress.known = unionMap(progress.known, remote.known);
-    progress.pronounced = unionMap(progress.pronounced, remote.pronounced);
+  function mergeProgress(other){
+    progress.stars = Math.max(progress.stars||0, other.stars||0);
+    progress.sessions = Math.max(progress.sessions||0, other.sessions||0);
+    progress.known = unionMap(progress.known, other.known);
+    progress.pronounced = unionMap(progress.pronounced, other.pronounced);
   }
   function pullProgress(){
-    var userAtStart = currentUser;
-    api('/api/progress').then(function(r){
-      if(currentUser !== userAtStart) return;
-      if(r.status === 401){ handleSessionExpired(); return; }
+    api('/api/progress?id=' + encodeURIComponent(learnerId)).then(function(r){
       if(r.status === 404){ pushProgress(); return; }
       if(!r.ok || !r.data) return;
       mergeProgress(r.data);
@@ -620,23 +560,23 @@
       renderHeaderStats();
     }).catch(function(){});
   }
-  function offerLegacyImport(){
+  // Earlier versions of the site stored progress under other keys (including per-account caches).
+  // Fold anything found on this device into the current progress, once.
+  function mergeLegacyLocal(){
     try{
-      if(localStorage.getItem(LEGACY_HANDLED_KEY)) return;
-      localStorage.setItem(LEGACY_HANDLED_KEY, '1');
-      var raw = localStorage.getItem(LEGACY_KEY);
-      if(!raw) return;
-      var old = JSON.parse(raw);
-      var hasData = (old.stars > 0) || Object.keys(old.known || {}).length > 0;
-      if(!hasData) return;
-      var ok = window.confirm('这台设备上有之前的学习记录（' + (old.stars || 0) + ' 颗星）。\n要把它导入到当前账号「' + currentUser.username + '」吗？');
-      if(!ok) return;
-      mergeProgress({stars:old.stars, sessions:old.sessions, known:old.known, pronounced:old.pronounced});
-      saveProgress();
-      renderHeaderStats();
-      showToast('已导入之前的学习记录');
+      if(localStorage.getItem(LEGACY_MERGED_KEY)) return;
+      localStorage.setItem(LEGACY_MERGED_KEY, '1');
+      var changed = false;
+      for(var i = 0; i < localStorage.length; i++){
+        var key = localStorage.key(i);
+        if(key !== LEGACY_KEY && key.indexOf(LEGACY_ACCOUNT_PREFIX) !== 0) continue;
+        var old = JSON.parse(localStorage.getItem(key));
+        if(old && typeof old === 'object'){ mergeProgress(old); changed = true; }
+      }
+      if(changed){ saveProgress(); renderHeaderStats(); }
     }catch(e){}
   }
+
   function knownCountFor(catId){ return (progress.known[catId]||[]).length; }
   function markKnown(catId, hanzi){
     if(!progress.known[catId]) progress.known[catId] = [];
@@ -780,7 +720,7 @@
   function showScreen(id){
     currentScreen = id;
     document.querySelectorAll('.screen').forEach(function(s){ s.hidden = (s.id !== id); });
-    document.getElementById('backBtn').hidden = (id === 'screen-home' || id === 'screen-auth' || id === 'screen-loading');
+    document.getElementById('backBtn').hidden = (id === 'screen-home');
   }
 
   function renderCategoryGrid(){
@@ -1182,7 +1122,7 @@
   }
 
   /* ---------- Practice session timer ---------- */
-  function sessionKey(){ return 'longbaoSessionEndV2:' + (currentUser ? currentUser.id : 'anonymous'); }
+  function sessionKey(){ return 'longbaoSessionEndV3'; }
   var SESSION_MINUTES = 25;
   var sessionInterval = null;
   var sessionEndAt = null;
@@ -1255,131 +1195,6 @@
     }catch(e){}
   }
 
-  /* ---------- Accounts: register / login / logout ---------- */
-  var authMode = 'login';
-  var authBusy = false;
-  var USERNAME_RE = /^[A-Za-z0-9_一-龥]{2,20}$/;
-
-  function el(id){ return document.getElementById(id); }
-
-  function showAuthError(message){
-    var box = el('authError');
-    box.textContent = message || '';
-    box.hidden = !message;
-  }
-  function authSubmitLabel(){ return authMode === 'register' ? '注册并开始学习' : '登录'; }
-  function setAuthBusy(busy){
-    authBusy = busy;
-    el('authSubmit').disabled = busy;
-    el('authSubmit').textContent = busy ? '请稍等…' : authSubmitLabel();
-  }
-  function setAuthMode(mode){
-    authMode = mode;
-    var isRegister = mode === 'register';
-    el('tabLogin').classList.toggle('is-active', !isRegister);
-    el('tabRegister').classList.toggle('is-active', isRegister);
-    el('tabLogin').setAttribute('aria-selected', String(!isRegister));
-    el('tabRegister').setAttribute('aria-selected', String(isRegister));
-    el('usernameHint').hidden = !isRegister;
-    el('passwordHint').hidden = !isRegister;
-    el('confirmRow').hidden = !isRegister;
-    el('authPassword').setAttribute('autocomplete', isRegister ? 'new-password' : 'current-password');
-    el('authSubmit').textContent = authSubmitLabel();
-    showAuthError('');
-  }
-  function validateRegister(username, password, password2){
-    if(!USERNAME_RE.test(username)) return '用户名需要 2-20 个字符，只能包含中文、字母、数字和下划线';
-    if(password.length < 8 || password.length > 128) return '密码需要 8-128 个字符';
-    if(!/[A-Za-z]/.test(password) || !/\d/.test(password)) return '密码需要同时包含字母和数字';
-    if(password.toLowerCase() === username.toLowerCase()) return '密码不能和用户名相同';
-    if(password !== password2) return '两次输入的密码不一样，请再检查一下';
-    return '';
-  }
-  function resetAuthForm(){
-    el('authUsername').value = '';
-    el('authPassword').value = '';
-    el('authPassword2').value = '';
-    el('showPw').checked = false;
-    el('authPassword').type = 'password';
-    el('authPassword2').type = 'password';
-  }
-
-  function showAuth(message){
-    clearTimeout(syncTimer);
-    currentUser = null;
-    progress = emptyProgress();
-    suspendSessionUI();
-    el('userChip').hidden = true;
-    el('statsPill').hidden = true;
-    closeChat();
-    el('chatFab').hidden = true;
-    chatHistory = [];
-    resetAuthForm();
-    setAuthMode('login');
-    if(message) showAuthError(message);
-    showScreen('screen-auth');
-  }
-  function handleSessionExpired(){
-    if(currentUser) showAuth('登录已过期，请重新登录');
-  }
-  function bootApp(user){
-    currentUser = user;
-    progress = loadProgress();
-    el('userName').textContent = user.username;
-    el('userChip').hidden = false;
-    el('statsPill').hidden = false;
-    el('chatFab').hidden = false;
-    resetChat();
-    renderHeaderStats();
-    showScreen('screen-home');
-    resumeSession();
-    pullProgress();
-    setTimeout(function(){ if(currentUser === user) offerLegacyImport(); }, 400);
-  }
-
-  el('tabLogin').addEventListener('click', function(){ setAuthMode('login'); });
-  el('tabRegister').addEventListener('click', function(){ setAuthMode('register'); });
-  el('showPw').addEventListener('change', function(){
-    var type = this.checked ? 'text' : 'password';
-    el('authPassword').type = type;
-    el('authPassword2').type = type;
-  });
-  el('authForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    if(authBusy) return;
-    var username = el('authUsername').value.trim();
-    var password = el('authPassword').value;
-    if(!username || !password){ showAuthError('请输入用户名和密码'); return; }
-    if(authMode === 'register'){
-      var problem = validateRegister(username, password, el('authPassword2').value);
-      if(problem){ showAuthError(problem); return; }
-    }
-    showAuthError('');
-    setAuthBusy(true);
-    api('/api/auth/' + authMode, {method:'POST', body:{username:username, password:password}}).then(function(r){
-      setAuthBusy(false);
-      if(r.ok && r.data && r.data.user){
-        resetAuthForm();
-        bootApp(r.data.user);
-      } else {
-        showAuthError((r.data && r.data.error) || '出错了，请稍后再试');
-      }
-    }).catch(function(){
-      setAuthBusy(false);
-      showAuthError('网络好像断开了，请检查网络后再试');
-    });
-  });
-  el('logoutBtn').addEventListener('click', function(){
-    clearTimeout(syncTimer);
-    pushProgress().then(function(){
-      return api('/api/auth/logout', {method:'POST', body:{}});
-    }).then(function(){
-      showAuth();
-    }).catch(function(){
-      showToast('退出失败，请检查网络后再试');
-    });
-  });
-
   /* ---------- Chat helper (Claude) ---------- */
   var MASCOT_HTML =
     '<span class="fin left"></span><span class="fin right"></span>' +
@@ -1436,7 +1251,7 @@
   }
   function sendChat(text){
     text = String(text || '').trim();
-    if(!text || chatBusy || !currentUser) return;
+    if(!text || chatBusy) return;
     addChatBubble('user', text);
     el('chatSuggest').hidden = true;
     el('chatInput').value = '';
@@ -1454,7 +1269,6 @@
         return;
       }
       chatHistory.pop();
-      if(r.status === 401){ handleSessionExpired(); return; }
       addChatBubble('note', (r.data && r.data.error) || '龙宝刚刚走神了，请再问一次');
     }).catch(function(){
       thinking.remove();
@@ -1474,13 +1288,13 @@
     sendChat(el('chatInput').value);
   });
 
-  showScreen('screen-loading');
-  api('/api/auth/me').then(function(r){
-    if(r.ok && r.data && r.data.user) bootApp(r.data.user);
-    else showAuth();
-  }).catch(function(){
-    showAuth('连不上服务器，请检查网络后刷新页面');
-  });
+  resetChat();
+  el('chatFab').hidden = false;
+  renderHeaderStats();
+  showScreen('screen-home');
+  resumeSession();
+  mergeLegacyLocal();
+  pullProgress();
 })();
 </script>
 </body>

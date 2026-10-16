@@ -7,10 +7,6 @@ const path = require('path');
 const PORT = Number(process.env.PORT) || 3100;
 const API_DIR = path.join(__dirname, 'api');
 const ROUTES = {
-  '/api/auth/register': 'auth/register.js',
-  '/api/auth/login': 'auth/login.js',
-  '/api/auth/logout': 'auth/logout.js',
-  '/api/auth/me': 'auth/me.js',
   '/api/progress': 'progress.js',
   '/api/chat': 'chat.js'
 };

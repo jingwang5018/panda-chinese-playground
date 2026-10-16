@@ -1,6 +1,8 @@
 const { getCollection } = require('./_lib/db');
-const { send, serverError, guardWrite, getSessionUser } = require('./_lib/auth');
+const { send, tooMany, serverError, guardWrite, clientIp, hitLimit } = require('./_lib/http');
 
+// Visitors are anonymous: each browser generates a random UUID v4 and uses it as the key of its own progress document.
+const ID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const CAT_RE = /^[a-z]{1,20}$/;
 
 function cleanWordMap(input) {
@@ -26,12 +28,12 @@ function cleanCount(value) {
 
 module.exports = async function handler(req, res) {
   try {
-    const user = await getSessionUser(req);
-    if (!user) return send(res, 401, { error: 'unauthorized' });
-
     if (req.method === 'GET') {
+      const id = req.query && req.query.id;
+      if (typeof id !== 'string' || !ID_RE.test(id)) return send(res, 400, { error: 'invalid id' });
+      if (!(await hitLimit('progress:get:' + clientIp(req), 1500, 3600))) return tooMany(res);
       const progress = await getCollection('progress');
-      const doc = await progress.findOne({ _id: user.id });
+      const doc = await progress.findOne({ _id: id.toLowerCase() });
       if (!doc) return send(res, 404, { error: 'not found' });
       return send(res, 200, {
         stars: doc.stars || 0,
@@ -45,6 +47,7 @@ module.exports = async function handler(req, res) {
     if (req.method === 'PUT') {
       if (!guardWrite(req, res)) return;
       const body = req.body && typeof req.body === 'object' ? req.body : {};
+      if (typeof body.id !== 'string' || !ID_RE.test(body.id)) return send(res, 400, { error: 'invalid id' });
       const stars = cleanCount(body.stars);
       const sessions = cleanCount(body.sessions);
       const known = cleanWordMap(body.known);
@@ -52,10 +55,11 @@ module.exports = async function handler(req, res) {
       if (stars === null || sessions === null || known === null || pronounced === null) {
         return send(res, 400, { error: 'invalid data' });
       }
+      if (!(await hitLimit('progress:put:' + clientIp(req), 1500, 3600))) return tooMany(res);
       const now = new Date();
       const progress = await getCollection('progress');
       await progress.updateOne(
-        { _id: user.id },
+        { _id: body.id.toLowerCase() },
         {
           $set: { stars, sessions, known, pronounced, updatedAt: now },
           $setOnInsert: { createdAt: now }

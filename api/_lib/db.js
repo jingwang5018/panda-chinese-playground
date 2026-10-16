@@ -21,12 +21,7 @@ async function getCollection(name) {
   const client = await getClient();
   const db = client.db();
   if (!indexesPromise) {
-    indexesPromise = Promise.all([
-      db.collection(PREFIX + 'users').createIndex({ usernameLower: 1 }, { unique: true }),
-      db.collection(PREFIX + 'sessions').createIndex({ tokenHash: 1 }, { unique: true }),
-      db.collection(PREFIX + 'sessions').createIndex({ expiresAt: 1 }, { expireAfterSeconds: 0 }),
-      db.collection(PREFIX + 'rateLimits').createIndex({ expiresAt: 1 }, { expireAfterSeconds: 0 })
-    ]);
+    indexesPromise = db.collection(PREFIX + 'rateLimits').createIndex({ expiresAt: 1 }, { expireAfterSeconds: 0 });
     indexesPromise.catch(() => { indexesPromise = null; });
   }
   await indexesPromise;
