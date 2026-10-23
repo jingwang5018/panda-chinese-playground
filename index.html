@@ -640,18 +640,57 @@
   }
   function sample(arr, n){ return shuffle(arr).slice(0, n); }
 
-  function speak(text, rate){
+  var audioPlayer = null;
+  var voiceHintShown = false;
+
+  function audioNameFor(text){
+    return Array.from(text).map(function(c){ return c.codePointAt(0).toString(16); }).join('-');
+  }
+  // Fallback for words that have no recorded audio: the device's own voice (needs a Chinese voice installed).
+  function speakWithVoice(text, rate){
     try{
       if(!('speechSynthesis' in window)) return;
+      var synth = window.speechSynthesis;
+      var voices = synth.getVoices();
+      var zh = voices.filter(function(v){ return v.lang && /^(zh|cmn)/i.test(v.lang); })[0];
+      if(voices.length && !zh && !voiceHintShown){
+        voiceHintShown = true;
+        showToast('这个设备没有中文语音，听不到读音哦');
+      }
       var u = new SpeechSynthesisUtterance(text);
       u.lang = 'zh-CN';
       u.rate = rate || 0.85;
-      var voices = window.speechSynthesis.getVoices();
-      var zh = voices.filter(function(v){ return v.lang && v.lang.toLowerCase().indexOf('zh') === 0; })[0];
       if(zh) u.voice = zh;
-      window.speechSynthesis.cancel();
-      window.speechSynthesis.speak(u);
+      if(synth.speaking || synth.pending){
+        synth.cancel();
+        setTimeout(function(){ synth.speak(u); }, 60);
+      } else {
+        synth.speak(u);
+      }
     }catch(e){}
+  }
+  function speak(text, rate){
+    var fellBack = false;
+    function fallBack(){
+      if(fellBack) return;
+      fellBack = true;
+      speakWithVoice(text, rate);
+    }
+    try{
+      if(audioPlayer){ audioPlayer.pause(); }
+      var audio = new Audio('/audio/' + audioNameFor(text) + '.wav');
+      audioPlayer = audio;
+      audio.playbackRate = (rate && rate < 0.7) ? 0.6 : 1;
+      audio.preservesPitch = true;
+      audio.addEventListener('error', fallBack);
+      var started = audio.play();
+      if(started && started.catch) started.catch(function(err){
+        if(err && err.name === 'AbortError') return;
+        fallBack();
+      });
+    }catch(e){
+      fallBack();
+    }
   }
 
   var audioCtx;

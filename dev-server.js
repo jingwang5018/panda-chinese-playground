@@ -45,6 +45,13 @@ const server = http.createServer(async (req, res) => {
       res.setHeader('Cache-Control', 'no-store');
       return res.end(fs.readFileSync(path.join(__dirname, 'vocab.js')));
     }
+    const audioMatch = url.pathname.match(/^\/audio\/([0-9a-f-]+)\.wav$/);
+    if (audioMatch) {
+      const file = path.join(__dirname, 'audio', audioMatch[1] + '.wav');
+      if (!fs.existsSync(file)) { res.statusCode = 404; return res.end('Not found'); }
+      res.setHeader('Content-Type', 'audio/wav');
+      return res.end(fs.readFileSync(file));
+    }
     if (ROUTES[url.pathname]) {
       req.query = Object.fromEntries(url.searchParams);
       const raw = await readBody(req);
