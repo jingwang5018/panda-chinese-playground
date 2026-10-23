@@ -12,7 +12,19 @@
       {h:'鱼', p:'yú', e:'fish', emoji:'🐟'},
       {h:'老虎', p:'lǎohǔ', e:'tiger', emoji:'🐯'},
       {h:'熊猫', p:'xióngmāo', e:'panda', emoji:'🐼'},
-      {h:'猴子', p:'hóuzi', e:'monkey', emoji:'🐵'}
+      {h:'猴子', p:'hóuzi', e:'monkey', emoji:'🐵'},
+      {h:'龙', p:'lóng', e:'dragon', emoji:'🐉'},
+      {h:'独角兽', p:'dújiǎoshòu', e:'unicorn', emoji:'🦄'},
+      {h:'大象', p:'dàxiàng', e:'elephant', emoji:'🐘'},
+      {h:'长颈鹿', p:'chángjǐnglù', e:'giraffe', emoji:'🦒'},
+      {h:'狮子', p:'shīzi', e:'lion', emoji:'🦁'},
+      {h:'熊', p:'xióng', e:'bear', emoji:'🐻'},
+      {h:'马', p:'mǎ', e:'horse', emoji:'🐴'},
+      {h:'牛', p:'niú', e:'cow', emoji:'🐮'},
+      {h:'猪', p:'zhū', e:'pig', emoji:'🐷'},
+      {h:'青蛙', p:'qīngwā', e:'frog', emoji:'🐸'},
+      {h:'乌龟', p:'wūguī', e:'turtle', emoji:'🐢'},
+      {h:'企鹅', p:"qǐ'é", e:'penguin', emoji:'🐧'}
     ]},
     { id:'colors', name:'颜色魔法', icon:'🎨', color:'var(--purple)', words:[
       {h:'红色', p:'hóngsè', e:'red', emoji:'🔴'},
