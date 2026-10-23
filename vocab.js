@@ -67,6 +67,66 @@
       {h:'妹妹', p:'mèimei', e:'little sister', emoji:'👶'},
       {h:'爷爷', p:'yéye', e:'grandpa', emoji:'👴'},
       {h:'奶奶', p:'nǎinai', e:'grandma', emoji:'👵'}
+    ]},
+    { id:'body', name:'身体部位', icon:'🖐️', color:'var(--red)', words:[
+      {h:'眼睛', p:'yǎnjing', e:'eye', emoji:'👁️'},
+      {h:'耳朵', p:'ěrduo', e:'ear', emoji:'👂'},
+      {h:'鼻子', p:'bízi', e:'nose', emoji:'👃'},
+      {h:'嘴巴', p:'zuǐba', e:'mouth', emoji:'👄'},
+      {h:'牙齿', p:'yáchǐ', e:'tooth', emoji:'🦷'},
+      {h:'手', p:'shǒu', e:'hand', emoji:'✋'},
+      {h:'脚', p:'jiǎo', e:'foot', emoji:'🦶'},
+      {h:'腿', p:'tuǐ', e:'leg', emoji:'🦵'},
+      {h:'手臂', p:'shǒubì', e:'arm', emoji:'💪'},
+      {h:'心', p:'xīn', e:'heart', emoji:'❤️'}
+    ]},
+    { id:'nature', name:'大自然', icon:'🌈', color:'var(--green)', words:[
+      {h:'太阳', p:'tàiyáng', e:'sun', emoji:'☀️'},
+      {h:'月亮', p:'yuèliang', e:'moon', emoji:'🌙'},
+      {h:'星星', p:'xīngxing', e:'star', emoji:'⭐'},
+      {h:'云', p:'yún', e:'cloud', emoji:'☁️'},
+      {h:'雨', p:'yǔ', e:'rain', emoji:'🌧️'},
+      {h:'雪', p:'xuě', e:'snow', emoji:'❄️'},
+      {h:'风', p:'fēng', e:'wind', emoji:'💨'},
+      {h:'花', p:'huā', e:'flower', emoji:'🌸'},
+      {h:'树', p:'shù', e:'tree', emoji:'🌳'},
+      {h:'山', p:'shān', e:'mountain', emoji:'⛰️'}
+    ]},
+    { id:'food', name:'美食小吃', icon:'🍜', color:'var(--gold)', words:[
+      {h:'米饭', p:'mǐfàn', e:'rice', emoji:'🍚'},
+      {h:'面条', p:'miàntiáo', e:'noodles', emoji:'🍜'},
+      {h:'面包', p:'miànbāo', e:'bread', emoji:'🍞'},
+      {h:'鸡蛋', p:'jīdàn', e:'egg', emoji:'🥚'},
+      {h:'牛奶', p:'niúnǎi', e:'milk', emoji:'🥛'},
+      {h:'饺子', p:'jiǎozi', e:'dumpling', emoji:'🥟'},
+      {h:'蛋糕', p:'dàngāo', e:'cake', emoji:'🎂'},
+      {h:'冰淇淋', p:'bīngqílín', e:'ice cream', emoji:'🍦'},
+      {h:'糖果', p:'tángguǒ', e:'candy', emoji:'🍬'},
+      {h:'汉堡', p:'hànbǎo', e:'hamburger', emoji:'🍔'}
+    ]},
+    { id:'transport', name:'交通出行', icon:'🚗', color:'var(--blue)', words:[
+      {h:'汽车', p:'qìchē', e:'car', emoji:'🚗'},
+      {h:'公交车', p:'gōngjiāochē', e:'bus', emoji:'🚌'},
+      {h:'火车', p:'huǒchē', e:'train', emoji:'🚆'},
+      {h:'飞机', p:'fēijī', e:'airplane', emoji:'✈️'},
+      {h:'船', p:'chuán', e:'ship', emoji:'🚢'},
+      {h:'自行车', p:'zìxíngchē', e:'bicycle', emoji:'🚲'},
+      {h:'出租车', p:'chūzūchē', e:'taxi', emoji:'🚕'},
+      {h:'地铁', p:'dìtiě', e:'subway', emoji:'🚇'},
+      {h:'火箭', p:'huǒjiàn', e:'rocket', emoji:'🚀'},
+      {h:'直升机', p:'zhíshēngjī', e:'helicopter', emoji:'🚁'}
+    ]},
+    { id:'actions', name:'动作表情', icon:'🏃', color:'var(--purple)', words:[
+      {h:'吃', p:'chī', e:'eat', emoji:'🍽️'},
+      {h:'喝', p:'hē', e:'drink', emoji:'🥤'},
+      {h:'跑', p:'pǎo', e:'run', emoji:'🏃'},
+      {h:'跳', p:'tiào', e:'jump', emoji:'🤸'},
+      {h:'睡觉', p:'shuìjiào', e:'sleep', emoji:'😴'},
+      {h:'笑', p:'xiào', e:'laugh', emoji:'😄'},
+      {h:'哭', p:'kū', e:'cry', emoji:'😢'},
+      {h:'看', p:'kàn', e:'look', emoji:'👀'},
+      {h:'听', p:'tīng', e:'listen', emoji:'🎧'},
+      {h:'唱歌', p:'chànggē', e:'sing', emoji:'🎤'}
     ]}
   ];
 });
